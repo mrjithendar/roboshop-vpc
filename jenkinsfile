@@ -1,0 +1,24 @@
+pipeline { 
+
+    agent any
+    options { disableConcurrentBuilds() }
+
+    parameters {
+    //choice(name: 'tfaction', choices: ['init', 'plan', 'apply -auto-approve', 'destroy -auto-approve'], description: 'Pick any action')
+    text(name: 'tfaction', defaultValue: '', description: 'Enter the terraform command Ex: terraform init')
+               }
+
+    environment {
+        tfaction = "${params.tfaction}"
+                }
+
+    stages ('Setup Roboshop Application') { 
+        stage ('Installing shipping Server') { 
+            steps { 
+            withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'awskey', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh "${env.tfaction}"
+                    } 
+                } 
+            } 
+        } 
+    } 
