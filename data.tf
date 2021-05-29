@@ -6,7 +6,7 @@ data "aws_route53_zone" "jithendar" {
 terraform {
   backend "s3" {
     bucket = "terraform-state-rs-practice"
-    key    = "rs-instances/cart.tfstate"
+    key    = "rs-instances/vpc.tfstate"
     region = "us-east-1"
   }
 }
