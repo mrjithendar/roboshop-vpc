@@ -23,7 +23,7 @@ resource "aws_subnet" "private-subnets" {
 
 resource "aws_subnet" "public-subnets" {
     count                  = 2
-    cidr_block             = cidrsubnet(var.vpc_cidr,2, count.index+2)
+    cidr_block             = cidrsubnet(var.vpc_cidr,2, count.index)
     vpc_id                 = aws_vpc.vpc.id
     availability_zone      = element(data.aws_availablity_zones.name, count.index+1)
     tags                   = {
@@ -33,6 +33,7 @@ resource "aws_subnet" "public-subnets" {
     } 
 }
 
+#cidrsubnet Function:
 #cidrsubnet calculates a subnet address within given IP network address prefix. Ex= cidrsubnet(prefix, newbits, netnum).
 
 #prefix must be given in CIDR notation, as defined.
