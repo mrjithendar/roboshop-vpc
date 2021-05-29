@@ -10,14 +10,15 @@ pipeline {
 
     environment {
         tfaction = "${params.tfaction}"
+        AWS      = credentials('awskey')
                 }
 
-    stages ('Setup Roboshop Application') { 
-        stage ('Installing shipping Server') { 
+    stages { 
+        stage ('Creating AWS VPC Roboshop Application') { 
             steps { 
-            withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'awskey', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                    sh "${env.tfaction}"
-                    } 
+                sh "export aws_access_key_id"
+                sh "export AWS_ACCESS_KEY_ID=${AWS_USR}"
+                sh "export AWS_SECRET_ACCESS_KEY=${AWS_PSW}"
                 } 
             } 
         } 
