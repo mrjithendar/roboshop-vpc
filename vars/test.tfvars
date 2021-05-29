@@ -1,1 +1,6 @@
 ENV = "test"
+project = "roboshop"
+vpc_cidr = "192.168.0.0/24"
+default_vpc_id = "vpc-53f7632e"
+default_vpc_cidr = "172.31.0.0/16"
+default_rt = "rtb-f061728e"
