@@ -15,9 +15,9 @@ resource "aws_route_table" "public" {
   }
 }
 
-resource "aws_route_table_association" "public" {
+resource "aws_route_table_association" "private" {
     count           = 2
-    route_table_id  = aws_route_table.public.id 
+    route_table_id  = aws_route_table.private.id 
     subnet_id       = element(aws_subnet.public-subnets.*.id,count.index)
 }
 
