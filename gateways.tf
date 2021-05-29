@@ -18,7 +18,9 @@ resource "aws_eip" "eip" {
 
 resource "aws_nat_gateway" "ngw" {
     allocation_id = aws_eip.eip.id
-    subnet_id     = aws_subnet.public-subnets.id
+    #subnet_id     = aws_subnet.public-subnets.id
+    subnet_id     = element(aws_subnet.public-subnets.names, count.index)
+    #element(data.aws_availability_zones.avz.names, count.index)
     tags              = {
       name          = "${var.project}-${var.env}-ngw"
       environemt    = var.env
