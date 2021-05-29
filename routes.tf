@@ -9,10 +9,10 @@ resource "aws_route_table" "public" {
       vpc_peering_connection_id = aws_vpc_peering_connection.peering.id
   }
   tags {
-      name          = "${var.project}-${var.env}-pub-rtable"
-      environment   = var.env
-      provisioned   = "terraform"
-  }
+    name          = "${var.project}-${var.env}-pub-rtable"
+    environment   = var.env
+    provisioned   = "terraform"
+}
 }
 
 resource "aws_route_table" "private" {
