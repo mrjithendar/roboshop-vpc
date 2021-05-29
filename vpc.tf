@@ -15,7 +15,7 @@ resource "aws_subnet" "private-subnets" {
     vpc_id                 = aws_vpc.vpc.id
     availability_zone      = element(data.aws_availability_zones.avz.names, count.index)
     tags                   = {
-        name               = "${var.project}-${var.env}-private-subnet-${count.index+1}"
+        name               = "${var.project}-${var.env}-private-${count.index+1}"
         environment        = var.env
         provisioned        = "terraform" 
     } 
@@ -27,7 +27,7 @@ resource "aws_subnet" "public-subnets" {
     vpc_id                 = aws_vpc.vpc.id
     availability_zone      = element(data.aws_availability_zones.avz.names, count.index)
     tags                   = {
-        name               = "${var.project}-${var.env}-public-subnet-${count.index+1}"
+        name               = "${var.project}-${var.env}-public-${count.index+1}"
         environment        = var.env
         provisioned        = "terraform"
     } 
