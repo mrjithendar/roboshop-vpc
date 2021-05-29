@@ -9,6 +9,8 @@ resource "aws_vpc" "vpc" {
     }
 }
 
+data "aws_availability_zones" "avz" {}
+
 resource "aws_subnet" "private-subnets" {
     count                  = 2
     cidr_block             = cidrsubnet(var.vpc_cidr,2, count.index)
