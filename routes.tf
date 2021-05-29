@@ -16,12 +16,6 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "private" {
-    count           = 2
-    route_table_id  = aws_route_table.private.id 
-    subnet_id       = element(aws_subnet.public-subnets.*.id,count.index)
-}
-
-resource "aws_route_table_association" "private" {
     vpc_id          = aws_vpc.vpc.id
     route {
         cidr_block  = "0.0.0.0/0"
@@ -36,6 +30,12 @@ resource "aws_route_table_association" "private" {
         environemt  = var.env
         provisioned = "terraform"
     }
+}
+
+resource "aws_route_table_association" "public" {
+    count           = 2
+    route_table_id  = aws_route_table.public.id 
+    subnet_id       = element(aws_subnet.public-subnets.*.id,count.index)
 }
 
 resource "aws_route_table_association" "private" {
