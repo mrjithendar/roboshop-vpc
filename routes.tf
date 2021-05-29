@@ -47,5 +47,5 @@ resource "aws_route_table_association" "private" {
 resource "aws_route" "default-rt-route" {
   route_table_id            = var.default_rt
   destination_cidr_block    = aws_vpc.vpc.cidr_block
-  vpc_peering_connection_id = aws_vpc_peering_connection.peering.id
+  vpc_peering_connection_id = aws_vpc_peering_connection.vpc-peering.id
 }
