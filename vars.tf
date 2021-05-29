@@ -1,4 +1,4 @@
-variable "ENV" {}
+variable "env" {}
 variable "project" {}
 variable "vpc_cidr" {}
 variable "default_vpc_id" {}

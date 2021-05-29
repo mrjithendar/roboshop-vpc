@@ -1,4 +1,4 @@
-ENV = "test"
+env = "test"
 project = "roboshop"
 vpc_cidr = "192.168.0.0/24"
 default_vpc_id = "vpc-53f7632e"
