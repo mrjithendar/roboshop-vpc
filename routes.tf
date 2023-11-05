@@ -1,51 +1,35 @@
-resource "aws_route_table" "public" {
-  vpc_id            = aws_vpc.vpc.id
-    route {
-        cidr_block    = "0.0.0.0/0"
-        gateway_id    = aws_internet_gateway.igw.id
-    }
-    route {
-        cidr_block                = var.default_vpc_cidr
-        vpc_peering_connection_id = aws_vpc_peering_connection.vpc-peering.id
-    }
-  tags = {
-    name          = "${var.project}-${var.env}-pub-rtable"
-    environment   = var.env
-    provisioned   = "terraform"
-    }
+resource "aws_route_table" "pr_rt" {
+  vpc_id = aws_vpc.vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.ngw.id
+  }
+  tags = (merge(local.common_tags, tomap({
+    "Name"    = "${local.name_prefix}-private-rt-${var.environment}",
+    "Purpose" = "${local.common_tags["Team"]} private route table"
+  })))
 }
 
-resource "aws_route_table" "private" {
-    vpc_id          = aws_vpc.vpc.id
-        route {
-            cidr_block  = "0.0.0.0/0"
-            gateway_id  = aws_nat_gateway.ngw.id
-        }
-        route {
-            cidr_block                = var.default_vpc_cidr
-            vpc_peering_connection_id = aws_vpc_peering_connection.vpc-peering.id
-        }
-    tags = {
-        name        = "${var.project}-${var.env}-pri-rtable"
-        environemt  = var.env
-        provisioned = "terraform"
-    }
+resource "aws_route_table_association" "pr_rta" {
+  count          = length(local.privateSubnets)
+  subnet_id      = element(local.privateSubnets, count.index)
+  route_table_id = aws_route_table.pr_rt.id
 }
 
-resource "aws_route_table_association" "public" {
-    count           = 2
-    route_table_id  = aws_route_table.public.id 
-    subnet_id       = element(aws_subnet.public-subnets.*.id,count.index)
+resource "aws_route_table" "pl_rt" {
+  vpc_id = aws_vpc.vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+  tags = (merge(local.common_tags, tomap({
+    "Name"    = "${local.name_prefix}-public-rt-${var.environment}",
+    "Purpose" = "${local.common_tags["Team"]} public route table"
+  })))
 }
 
-resource "aws_route_table_association" "private" {
-  count             = 2
-  route_table_id    = aws_route_table.private.id
-  subnet_id         = element(aws_subnet.private-subnets.*.id,count.index)
-}
-
-resource "aws_route" "default-rt-route" {
-  route_table_id            = var.default_rt
-  destination_cidr_block    = aws_vpc.vpc.cidr_block
-  vpc_peering_connection_id = aws_vpc_peering_connection.vpc-peering.id
+resource "aws_route_table_association" "pl_rta" {
+  count          = length(local.publucSubnets)
+  subnet_id      = element(local.publucSubnets, count.index)
+  route_table_id = aws_route_table.pl_rt.id
 }

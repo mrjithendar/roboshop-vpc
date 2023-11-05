@@ -3,15 +3,9 @@ pipeline {
     agent any
     options { disableConcurrentBuilds() }
 
-    parameters {
-    //choice(name: 'tfaction', choices: ['init', 'plan', 'apply -auto-approve', 'destroy -auto-approve'], description: 'Pick any action')
-    text(name: 'tfaction', defaultValue: '', description: 'Enter the terraform command Ex: terraform init')
-               }
-
     environment {
-        tfaction = "${params.tfaction}"
-        AWS      = credentials('awskey')
-                }
+        AWS = credentials('AWSCred')
+    }
 
     stages { 
         stage ('Creating AWS VPC Roboshop Application') { 

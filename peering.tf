@@ -1,9 +1,9 @@
-resource "aws_vpc_peering_connection" "vpc-peering" {
+resource "aws_vpc_peering_connection" "vpc_peering" {
     peer_vpc_id = aws_vpc.vpc.id
-    vpc_id      = var.default_vpc_id
+    vpc_id      = data.aws_vpc.default.id
     auto_accept = true
-
-    tags        = {
-        name    = "peering between ${var.project}-${var.env}-vpc and default vpc"
-    }
+    tags = (merge(local.common_tags, tomap({
+    "Name"    = "${local.name_prefix}-cluster-vpc-${var.environment}",
+    "Purpose" = "vpc for ${local.common_tags["Team"]}"
+  })))
 }
