@@ -15,7 +15,7 @@ pipeline {
                     sh "terraform init -reconfigure"
                     sh "terraform validate"
                     sh "terraform plan -var-file=vars/dev.tfvars -out=planfile"
-                    sh "terraform apply -var-file=vars/dev.tfvars planfile"
+                    sh "terraform apply planfile"
                 }
             }
             } 
