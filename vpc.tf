@@ -10,7 +10,7 @@ resource "aws_vpc" "vpc" {
     create_before_destroy = true
   }
   tags = (merge(local.common_tags, tomap({
-    "Name"    = "${local.name_prefix}-cluster-vpc-${var.environment}",
+    "Name"    = "${local.name_prefix}-vpc-${var.environment}",
     "Purpose" = "vpc for ${local.common_tags["Team"]}"
   })))
 }

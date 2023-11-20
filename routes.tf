@@ -10,12 +10,6 @@ resource "aws_route_table" "pr_rt" {
   })))
 }
 
-resource "aws_route_table_association" "pr_rta" {
-  count          = length(local.privateSubnets)
-  subnet_id      = element(local.privateSubnets, count.index)
-  route_table_id = aws_route_table.pr_rt.id
-}
-
 resource "aws_route_table" "pl_rt" {
   vpc_id = aws_vpc.vpc.id
   route {
@@ -28,6 +22,14 @@ resource "aws_route_table" "pl_rt" {
   })))
 }
 
+#Private route table associations
+resource "aws_route_table_association" "pr_rta" {
+  count          = length(local.privateSubnets)
+  subnet_id      = element(local.privateSubnets, count.index)
+  route_table_id = aws_route_table.pr_rt.id
+}
+
+#Public route table associations
 resource "aws_route_table_association" "pl_rta" {
   count          = length(local.publucSubnets)
   subnet_id      = element(local.publucSubnets, count.index)

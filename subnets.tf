@@ -1,9 +1,9 @@
 locals {
   privateSubnets = [
-    aws_subnet.vpc_subnets[1].id, aws_subnet.vpc_subnets[2].id, aws_subnet.vpc_subnets[3].id 
+    aws_subnet.vpc_subnets[3].id, aws_subnet.vpc_subnets[4].id, aws_subnet.vpc_subnets[5].id 
   ]
   publucSubnets = [
-    aws_subnet.vpc_subnets[0].id, aws_subnet.vpc_subnets[4].id
+    aws_subnet.vpc_subnets[0].id, aws_subnet.vpc_subnets[1].id, aws_subnet.vpc_subnets[2].id
   ]
 }
 

@@ -3,7 +3,7 @@ resource "aws_vpc_peering_connection" "vpc_peering" {
     vpc_id      = data.aws_vpc.default.id
     auto_accept = true
     tags = (merge(local.common_tags, tomap({
-    "Name"    = "${local.name_prefix}-cluster-vpc-${var.environment}",
+    "Name"    = "${local.name_prefix}-vpc-${var.environment}",
     "Purpose" = "vpc for ${local.common_tags["Team"]}"
   })))
 }
