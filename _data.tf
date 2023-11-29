@@ -5,4 +5,6 @@ data "aws_vpc" "default" {
   }
 }
 
-data "aws_availability_zones" "azs" {}
+data "aws_availability_zones" "azs" {
+  exclude_names = [ "us-east-1e" ]
+}
