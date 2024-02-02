@@ -9,3 +9,11 @@ output "private_subnets" {
 output "public_subnets" {
   value = local.publucSubnets
 }
+
+output "public_rt" {
+  value = aws_route_table.pl_rt
+}
+
+output "private_rt" {
+  value = aws_route_table.pr_rt
+}
