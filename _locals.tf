@@ -7,8 +7,9 @@ locals {
     Organization = "Decode DevOps"
     Createdby    = "Terraform"
   }
-  name_prefix = "DKODE"
-  name_suffix = var.environment
-  privateSubnets = [ aws_subnet.vpc_subnets[2].id, aws_subnet.vpc_subnets[3].id, aws_subnet.vpc_subnets[4].id ]
-  publucSubnets = [ aws_subnet.vpc_subnets[0].id, aws_subnet.vpc_subnets[1].id ]
+  name_prefix    = "roboshop"
+  name_suffix    = var.environment
+  privateSubnets = aws_subnet.vpc_private_subnets.*.id
+  publicSubnets  = aws_subnet.vpc_public_subnets.*.id
+  subnets        = concat(aws_subnet.vpc_private_subnets.*.id, aws_subnet.vpc_public_subnets.*.id)
 }

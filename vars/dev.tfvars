@@ -1,3 +1,3 @@
-environment = "dev"
-userid = "TestUser"
+environment = "demo"
+userid = "JDHARMAPURI"
 vpc_cidr = "10.0.0.0/16"

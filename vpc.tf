@@ -1,5 +1,3 @@
-
-
 resource "aws_vpc" "vpc" {
   cidr_block       = var.vpc_cidr
   instance_tenancy = "default"
@@ -13,9 +11,4 @@ resource "aws_vpc" "vpc" {
     "Name"    = "${local.name_prefix}-vpc-${var.environment}",
     "Purpose" = "vpc for ${local.common_tags["Team"]}"
   })))
-}
-
-resource "random_shuffle" "az_list" {
-  input        = data.aws_availability_zones.azs.names
-  result_count = length(data.aws_availability_zones.azs.names)
 }
